@@ -19,8 +19,8 @@ public:
     BuddyAllocator(const BuddyAllocator&) = delete;
     BuddyAllocator& operator=(const BuddyAllocator&) = delete;
 
-    BuddyAllocator(BuddyAllocator&&) noexcept;
-    BuddyAllocator& operator=(BuddyAllocator&&) noexcept;
+    BuddyAllocator(BuddyAllocator&& other) noexcept;
+    BuddyAllocator& operator=(BuddyAllocator&& other) noexcept;
 
     [[nodiscard]] void* allocate(std::size_t bytes) noexcept;
     void deallocate(void* ptr) noexcept;
@@ -54,14 +54,15 @@ private:
     [[nodiscard]] FreeNode* split_block(std::size_t current_order, std::size_t target_order) noexcept;
     void coalesce_block(std::size_t page_index, std::size_t order) noexcept;
 
-    void list_push_front(std::size_t order, FreeNode* ptr) noexcept;
-    void list_remove(std::size_t order, FreeNode* ptr) noexcept;
+    void list_push_front(std::size_t order, FreeNode* node) noexcept;
+    void list_remove(std::size_t order, FreeNode* node) noexcept;
     [[nodiscard]] FreeNode* list_pop_front(std::size_t order) noexcept;
 
 
     [[nodiscard]] std::size_t ptr_to_page_index(const void* ptr) const noexcept;
     [[nodiscard]] std::byte* page_index_to_ptr(std::size_t index) const noexcept;
     [[nodiscard]] std::size_t get_buddy_index(std::size_t page_index, std::size_t order) const noexcept;
+    [[nodiscard]] std::size_t validate_allocated_ptr(const void* ptr) const noexcept;
 
 
     std::byte* pool_start_{nullptr};
