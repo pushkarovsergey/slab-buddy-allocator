@@ -1,4 +1,4 @@
-#include "allocator/buddy_allocator.hpp"
+#include "buddy_allocator.hpp"
 #include <utility>
 #include <algorithm>
 
@@ -121,7 +121,7 @@ namespace allocator{
 
     std::size_t BuddyAllocator::free_bytes() const noexcept {
         std::size_t total_free = 0;
-        for (std::size_t order; order <= MAX_ORDER; ++order) {
+        for (std::size_t order = 0; order <= MAX_ORDER; ++order) {
             std::size_t node_count = 0;
             const FreeNode* node = free_lists_[order];
             while (node != nullptr) {

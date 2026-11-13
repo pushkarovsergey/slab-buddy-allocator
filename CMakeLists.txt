@@ -13,18 +13,13 @@ if(PROJECT_SOURCE_DIR STREQUAL PROJECT_BINARY_DIR)
   )
 endif()
 
+set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
+
 set(CMAKE_CXX_EXTENSIONS OFF)
 
 get_directory_property(IS_SUBPROJECT PARENT_DIRECTORY)
 
 add_subdirectory(src)
 
-option(ALLOCATOR_TESTS "Build test suite" ON)
-
-if(NOT ALLOCATOR_TESTS)
-    message(STATUS "Тести виключені")
-elseif(IS_SUBPROJECT)
-    message(STATUS "allocator не тестується в режимі підмодуля")
-else()
-    add_subdirectory(tests)
-endif()
+enable_testing()
+add_subdirectory(tests)
