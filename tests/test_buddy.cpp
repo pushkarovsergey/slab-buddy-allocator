@@ -4,8 +4,6 @@
 
 #include "buddy_allocator.hpp"
 
-// ctest --test-dir build --output-on-failure
-
 namespace allocator::test {
 
 class BuddyAllocatorTest : public ::testing::Test {

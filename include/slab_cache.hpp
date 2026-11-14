@@ -7,6 +7,7 @@ namespace allocator {
 
 class SlabCache{
 public:
+    SlabCache() noexcept = default;
     explicit SlabCache(BuddyAllocator& buddy, std::size_t object_size) noexcept;
     ~SlabCache() noexcept;
 
@@ -41,6 +42,10 @@ private:
     [[nodiscard]] SlabHeader* allocate_slab() noexcept;
     [[nodiscard]] SlabHeader* find_owning_slab(const void* ptr) const noexcept;
     [[nodiscard]] bool is_valid_slot_ptr(const SlabHeader* slab, const void* ptr) const noexcept;
+
+    void release_slabs() noexcept;
+    static void list_push_front(SlabHeader*& head, SlabHeader* slab) noexcept;
+    static void list_remove(SlabHeader*& head, SlabHeader* slab) noexcept;
 
     BuddyAllocator* buddy_{nullptr};
     std::size_t object_size_{0};

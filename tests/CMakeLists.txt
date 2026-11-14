@@ -9,11 +9,12 @@ FetchContent_Declare(
 set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
 FetchContent_MakeAvailable(googletest)
 
-add_executable(test_buddy 
+add_executable(test_buddy
     test_buddy.cpp
+    test_slab.cpp
     ${CMAKE_SOURCE_DIR}/src/buddy_allocator.cpp
+    ${CMAKE_SOURCE_DIR}/src/slab_cache.cpp
 )
-
 target_link_libraries(test_buddy PRIVATE allocator GTest::gtest_main)
 
 include(GoogleTest)
