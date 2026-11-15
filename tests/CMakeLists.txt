@@ -12,6 +12,7 @@ FetchContent_MakeAvailable(googletest)
 add_executable(test_buddy
     test_buddy.cpp
     test_slab.cpp
+    test_memory_pool.cpp
     ${CMAKE_SOURCE_DIR}/src/buddy_allocator.cpp
     ${CMAKE_SOURCE_DIR}/src/slab_cache.cpp
 )

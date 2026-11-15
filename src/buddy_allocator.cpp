@@ -3,7 +3,7 @@
 #include <algorithm>
 
 namespace allocator{
-    BuddyAllocator::BuddyAllocator(std::span<std::byte> pool)
+    BuddyAllocator::BuddyAllocator(std::span<std::byte> pool) noexcept
     : pool_start_(pool.data()),
       pool_end_(pool.data() + pool.size()),
       pool_size_(pool.size())

@@ -1,10 +1,11 @@
 add_library(
     allocator STATIC buddy_allocator.cpp
     slab_cache.cpp
+    memory_pool.cpp
 )
 
 add_compile_options(
-    # -Werror
+    -Werror
 
     -Wall
     -Wextra

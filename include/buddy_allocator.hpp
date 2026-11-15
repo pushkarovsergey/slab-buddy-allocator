@@ -12,7 +12,7 @@ namespace allocator {
 
 class BuddyAllocator {
 public:
-    explicit BuddyAllocator(std::span<std::byte> pool);
+    explicit BuddyAllocator(std::span<std::byte> pool) noexcept;
 
     ~BuddyAllocator() noexcept = default;
 

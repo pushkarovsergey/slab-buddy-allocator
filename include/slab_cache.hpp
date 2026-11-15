@@ -24,7 +24,7 @@ public:
     [[nodiscard]] std::size_t objects_per_slab() const noexcept;
     [[nodiscard]] std::size_t allocated_objects() const noexcept;
     [[nodiscard]] bool owns(const void* ptr) const noexcept;
-
+    bool try_deallocate(void* ptr) noexcept;
 
 
 private:

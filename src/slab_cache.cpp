@@ -60,26 +60,7 @@ namespace allocator {
     }
 
     void SlabCache::deallocate(void* ptr) noexcept { 
-        SlabHeader* slab = find_owning_slab(ptr);
-        if (slab == nullptr || !is_valid_slot_ptr(slab, ptr)) {
-            return;
-        }
-        const bool was_full = (slab->free_list == nullptr);
-
-        auto* slot = static_cast<FreeSlot*>(ptr);
-        slot->next = slab->free_list;
-        slab->free_list = slot;
-        --slab->in_use;
-
-        if (was_full) {
-            list_remove(full_slabs_, slab);
-            list_push_front(partial_slabs_, slab);
-        }
-
-        if (slab->in_use == 0) {
-            list_remove(partial_slabs_, slab); 
-            buddy_->deallocate_pages(slab, 0);
-        }
+        try_deallocate(ptr);
     }
 
     std::size_t SlabCache::object_size() const noexcept {
@@ -107,6 +88,35 @@ namespace allocator {
 
     bool SlabCache::owns(const void* ptr) const noexcept {
         return find_owning_slab(ptr) != nullptr;
+    }
+
+    bool SlabCache::try_deallocate(void* ptr) noexcept {
+        SlabHeader* slab = find_owning_slab(ptr);
+        if (slab == nullptr) {
+            return false;
+        }
+
+        if (!is_valid_slot_ptr(slab, ptr)) {
+            return true;
+        }
+
+        const bool was_full = (slab->free_list == nullptr);
+
+        auto* slot = static_cast<FreeSlot*>(ptr);
+        slot->next = slab->free_list;
+        slab->free_list = slot;
+        --slab->in_use;
+
+        if (was_full) {
+            list_remove(full_slabs_, slab);
+            list_push_front(partial_slabs_, slab);
+        }
+
+        if (slab->in_use == 0) {
+            list_remove(partial_slabs_, slab);
+            buddy_->deallocate_pages(slab, 0);
+        }
+        return true;
     }
 
     void SlabCache::release_slabs() noexcept {
