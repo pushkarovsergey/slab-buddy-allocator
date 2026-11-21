@@ -29,8 +29,8 @@ namespace allocator
         [[nodiscard]] constexpr size_t size_to_order(std::size_t bytes) noexcept {
             if(bytes <= PAGE_SIZE) 
             return MIN_ORDER;       
-            constexpr std::size_t PAGE_SHIFT = std::countr_zero(PAGE_SIZE);
-            return std::countr_zero(std::bit_ceil(bytes)) - PAGE_SHIFT;     
+            constexpr std::size_t PAGE_SHIFT = static_cast<std::size_t>(std::countr_zero(PAGE_SIZE));
+            return static_cast<std::size_t>(std::countr_zero(std::bit_ceil(bytes))) - PAGE_SHIFT;     
         }
 
         [[nodiscard]] constexpr size_t order_to_size(std::size_t order) noexcept {

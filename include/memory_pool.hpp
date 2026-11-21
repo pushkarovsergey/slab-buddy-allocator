@@ -44,8 +44,8 @@ public:
             return 0;
         }
         const std::size_t aligned = detail::align_to_power_two(bytes);
-        constexpr std::size_t min_shift = std::countr_zero(MIN_SLAB_SIZE);
-        return std::countr_zero(aligned) - min_shift;
+        constexpr std::size_t min_shift = static_cast<std::size_t>(std::countr_zero(MIN_SLAB_SIZE));
+        return static_cast<std::size_t>(std::countr_zero(aligned)) - min_shift;
     }
 private:
     BuddyAllocator buddy_;

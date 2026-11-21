@@ -28,3 +28,6 @@ add_compile_options(
 target_compile_features(allocator PUBLIC cxx_std_20)
 
 target_include_directories(allocator PUBLIC ${CMAKE_SOURCE_DIR}/include)
+
+add_executable(demo_allocator main.cpp)
+target_link_libraries(demo_allocator PRIVATE allocator)
