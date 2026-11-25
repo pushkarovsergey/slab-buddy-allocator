@@ -132,8 +132,8 @@ Measured on Windows (GCC UCRT64, `-O3 -DNDEBUG`) with a 16 MiB pre-allocated `Me
 | Workload | `MemoryPool` | `::operator new/delete` | Speedup |
 | :--- | ---: | ---: | ---: |
 | **Small Objects** (1M ops, 64 B batches) | ~31.1 ms | ~36.8 ms | **~1.18x** |
-| **Large Pages** (256K ops, 8 KiB batches) | ~4.9 ms | 40.3 – 135.8 ms | **8.2x – 29.2x** |
-| **Mixed Sizes** (512K ops, 16 B – 4 KiB) | ~19.8 ms | ~12.5 ms | **~0.63x** |
+| **Large Pages** (256K ops, 4 KiB batches) | ~4.9 ms | 40.3 – 135.8 ms | **8.2x – 29.2x** |
+| **Mixed Sizes** (256K ops, 16 B – 4 KiB) | ~19.8 ms | ~12.5 ms | **~0.63x** |
 
 ### Performance Analysis & Engineering Trade-offs
 
